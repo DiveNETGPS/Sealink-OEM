@@ -44,14 +44,23 @@
   - **4.1** [Error Codes](#41-error-codes)  
   - **4.2** [Remote Command IDs](#42-remote-command-ids)  
 
-- **5.** [Appendix](#5-appendix)  
-  - **5.1** [Command Mode Examples](#51-command-mode-examples)  
-    - **5.1.1** [Example 1 – Requesting Device Information](#511-example-1-requesting-device-information)  
-    - **5.1.2** [Example 2 – Requesting Remote Depth](#512-example-2-requesting-remote-depth)  
-    - **5.1.3** [Example 3 – Ambient Data Configuration](#513-example-3-ambient-data-configuration)  
-    - **5.1.4** [Example 4 – Enabling Packet Mode](#514-example-4-enabling-packet-mode)  
-    - **5.1.5** [Example 5 – Sending a Packet](#515-example-5-sending-a-packet)  
-  - **5.2** [Configuration Recipes](#52-configuration-recipes)
+- **5.1** [Command Mode Examples](#51-command-mode-examples)
+  - **5.1.1** [Example 1 – Requesting Device Information](#511-example-1-requesting-device-information)
+  - **5.1.2** [Example 2 – Requesting Remote Depth](#512-example-2-requesting-remote-depth)
+  - **5.1.3** [Example 3 – Setting up the Ambient Data Configuration](#513-example-3-setting-up-the-ambient-data-configuration)
+  - **5.1.4** [Example 4 – Enabling Packet Mode](#514-example-4-enabling-packet-mode)
+  - **5.1.5** [Example 5 – Sending a Packet in Packet Mode and Receiving Acknowledgement](#515-example-5-sending-a-packet-in-packet-mode-and-receiving-acknowledgement)
+  - **5.1.6** [Example 6 – Receiving an Incoming Packet](#516-example-6-receiving-an-incoming-packet)
+  - **5.1.7** [Example 7 – Requesting Remote Temperature (Logical Addressing)](#517-example-7-requesting-remote-temperature-logical-addressing)
+  - **5.1.8** [Example 8 – Enabling Automatic Ambient Data Output (1-second interval)](#518-example-8-enabling-automatic-ambient-data-output-1second-interval)
+  - **5.1.9** [Example 9 – Requesting Device Information (Alternative Syntax)](#519-example-9-requesting-device-information-alternative-syntax)
+
+- **5.2** [Configuration Recipes](#52-configuration-recipes)
+  - **1.** [Set default settings (fresh water, Command mode disabled)](#1-set-default-settings-fresh-water-command-mode-disabled)
+  - **2.** [Enable Command mode by default, seawater salinity](#2-enable-command-mode-by-default-seawater-salinity)
+  - **3.** [Disable automatic ambient data output](#3-disable-automatic-ambient-data-output)
+  - **4.** [Enable ambient data every 5 seconds (pressure + temperature only)](#4-enable-ambient-data-every-5-seconds-pressure--temperature-only)
+  - **5.** [Request local depth (basic)](#5-request-local-depth-basic)
 
 ## 1. Introduction
 
@@ -551,10 +560,10 @@ No host action required — incoming packet is delivered automatically.
 #### 3. **Disable automatic ambient data output**  
 `$PUWV6,0,0,0,0,0,0*32<CR><LF>`
 
-#### 5. **Enable ambient data every 5 seconds (pressure + temperature only)**  
+#### 4. **Enable ambient data every 5 seconds (pressure + temperature only)**  
 `$PUWV6,0,5000,1,1,0,0*XX<CR><LF>`
 
-#### 7. **Request local depth (basic)**  
+#### 5. **Request local depth (basic)**  
 `$PUWV2,0,0,2*28<CR><LF>`
 
 (Checksums must be calculated correctly before sending.)
