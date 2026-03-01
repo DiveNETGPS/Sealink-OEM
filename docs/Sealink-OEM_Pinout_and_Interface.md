@@ -85,5 +85,9 @@
 - External pressure sensor (XP6) reports both pressure and temperature if supported.
 - For independent ToF, use SVC/CMD strobe on XP5 Pin 3 with external timestamp capture.
 
+___
+![Sealink-OEM Technical Drawing](images/Sealink-OEM_drawing.jpg)
+___
+
 © 2026 DiveNET Subsea Wireless – Beringia Enterprises LLC  
 All rights reserved.
