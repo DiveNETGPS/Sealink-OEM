@@ -7,8 +7,6 @@ The modem can operate independetly as a remote responder able to receive and res
 - Connect the transducer to connector XP1 (OUT)
 - Connect a +12-14V power supply to connector XP2 (POWER)
 
-References: Sealink-OEM technical drawing; pinout diagram  
-
 ## 2. Manual control (send commands, read results)
 
 For manual control, at least one modem must be connected to a serial interface to act as the "host" device and send command requests as needed.
@@ -41,4 +39,10 @@ Other options:
 - C# (Windows apps)  
 - Arduino or Raspberry Pi (for embedded projects — use serial libraries like Serial or pyserial)
 
+## 4. References:
+- [Sealink-OEM technical drawing](Sealink-OEM_Technical_Drawing.pdf)
+- [Connector pinout guide](Sealink-OEM_Pinout_and_Interface.md)
+- [Communication protocol](Sealink-OEM_Communication_Protocol.md) 
+
+___
 Questions? Write to support@divenetgps.com.
