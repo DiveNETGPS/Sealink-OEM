@@ -88,6 +88,9 @@
 ___
 ![Sealink-OEM Technical Drawing](images/Sealink-OEM_drawing.jpg)
 ___
-
+Continue to:
+- [Getting Started](Sealink-OEM_Getting_Started.md)
+- [Communication Protocol](Sealink-OEM_Communication_Protocol.md)
+___
 © 2026 DiveNET Subsea Wireless – Beringia Enterprises LLC  
 All rights reserved.
