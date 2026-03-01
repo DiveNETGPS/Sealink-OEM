@@ -61,6 +61,7 @@ Full documentation → see [docs](docs) folder.
 ### Downloads & Resources
 - [Getting Started](/docs/Sealink-OEM_Getting_Started.md)
 - [Pinout & Interface](/docs/Sealink-OEM_Pinout_and_Interface.md)
+- [Communication Protocol](/docs/Sealink-OEM_Communication_Protocol.md)
 - [Technical Drawing](/docs/Sealink-OEM_Technical_Drawing.pdf)
 - [Simple Ranging Script (Python)](/resources/uart-getRange.py)
 
