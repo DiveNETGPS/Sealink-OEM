@@ -349,26 +349,27 @@ Pitch and roll readings.
 | reserved  | Reserved (empty)                     |
 | Pitch     | Device pitch in degrees              |
 | Roll      | Device roll in degrees               |
-### 3. Operating Modes
 
-3.1 Transparent Channel Mode  
+## 3. Operating Modes
+
+### 3.1 Transparent Channel Mode  
 In Transparent mode, all data from the host is sent unchanged over the acoustic channel and received unchanged by another modem on the same code channel.
 
-3.2 Command Mode  
+### 3.2 Command Mode  
 Command mode allows configuration, ranging, and advanced control. Modems analyze incoming data only in this mode.  
 - Default on power-up  
 - Can be set permanently via Settings Write (isCmdMode = 1)  
 - SVC/CMD pin (XP5 Pin 3) becomes a strobe output for Tx/Rx timing
 
-3.3 Packet Mode  
+### 3.3 Packet Mode  
 Packet mode enables reliable data transfer up to 64 bytes, including arbitrary data, with guaranteed delivery and acknowledgement.  
 - Active automatically in Command Mode (no separate enable needed since firmware 1.20+)  
 - Supports 255 logical addresses (0–254 unicast, 255 broadcast)  
 - See commands 2.11–2.20
 
-### 4. Identifiers
+## 4. Identifiers
 
-4.1 Error Codes
+### 4.1 Error Codes
 
 | Code | Value | Description                          |
 |------|-------|--------------------------------------|
@@ -388,7 +389,7 @@ Packet mode enables reliable data transfer up to 64 bytes, including arbitrary d
 | LOC_ACK_AFTER_WAKEUP         | 13    | Exited standby                       |
 | LOC_ERR_SVOLTAGE_TOO_HIGH    | 14    | Supply voltage too high              |
 
-4.2 Remote Command IDs
+### 4.2 Remote Command IDs
 
 | Command             | Value | Description                          |
 |---------------------|-------|--------------------------------------|
@@ -402,13 +403,13 @@ Packet mode enables reliable data transfer up to 64 bytes, including arbitrary d
 | RC_USR_CMD_000–007  | 7–14  | User-defined commands                |
 | RC_MSG_ASYNC_IN     | 16    | Incoming transparent message         |
 
-### 5. Appendix
+## 5. Appendix
 
-5.1 Command Mode Examples  
+### 5.1 Command Mode Examples  
 - Examples use correct checksums and <CR><LF> terminators. Replace `hh` with actual calculated checksum.
 - Examples use "<<" to indicate outbound messages/querries and ">>" to indicate inbound messages/responses.
 
-**5.1.1 Example 1 – Requesting Device Information**  
+#### **5.1.1 Example 1 – Requesting Device Information**  
 
 `<< $PUWV?,0*27<CR><LF>`
 
@@ -419,7 +420,7 @@ Packet mode enables reliable data transfer up to 64 bytes, including arbitrary d
 - PUWV? = IC_H2D_DINFO_GET  
 - Response includes serial number, system/core versions, baud rate, channel IDs, salinity, sensor presence, and Command Mode status.
 
-**5.1.2 Example 2 – Requesting Remote Depth**  
+#### **5.1.2 Example 2 – Requesting Remote Depth**  
 
 `<< $PUWV2,0,0,2*28<CR><LF>`
 
@@ -433,7 +434,7 @@ Packet mode enables reliable data transfer up to 64 bytes, including arbitrary d
 - 2 = RC_DPT_GET  
 - Response: propagation time (s), signal quality (MSR in dB), and remote depth (m)
 
-**5.1.3 Example 3 – Setting up the Ambient Data Configuration**
+#### **5.1.3 Example 3 – Setting up the Ambient Data Configuration**
 
 `<< $PUWV6,1,1000,1,1,1,1*03<CR><LF>`
 
@@ -451,7 +452,7 @@ Packet mode enables reliable data transfer up to 64 bytes, including arbitrary d
 - 1,1,1,1 = enable pressure, temperature, depth, VCC  
 - PUWV7 = IC_D2H_AMB_DTA (pressure in mBar, temperature in °C, depth in m, VCC in V)
 
-**5.1.4 Example 4 – Enabling Packet Mode**  
+#### **5.1.4 Example 4 – Enabling Packet Mode**  
 
 `<< $PUWVF,1,1,0*5E<CR><LF>`
 
@@ -467,7 +468,7 @@ Packet mode enables reliable data transfer up to 64 bytes, including arbitrary d
 
 **Note**: Since firmware 1.20+, packet mode is active in Command Mode — no separate enable required.
 
-**5.1.5 Example 5 – Sending a Packet in Packet Mode and Receiving Acknowledgement**  
+#### **5.1.5 Example 5 – Sending a Packet in Packet Mode and Receiving Acknowledgement**  
 
 `<< $PUWVG,0,8,0x313233*2C<CR><LF>`
 
@@ -483,7 +484,7 @@ Packet mode enables reliable data transfer up to 64 bytes, including arbitrary d
 - 0x313233 = hex bytes for "123"  
 - PUWVI = IC_D2H_PT_DLVRD (0 = target, 1 = attempts, empty = no azimuth)
 
-**5.1.6 Example 6 – Receiving an Incoming Packet**  
+#### **5.1.6 Example 6 – Receiving an Incoming Packet**  
 
 `>> $PUWVJ,42,,0x48656C6C6F*XX<CR><LF>`
 
@@ -496,7 +497,7 @@ Packet mode enables reliable data transfer up to 64 bytes, including arbitrary d
 
 No host action required — incoming packet is delivered automatically.
 
-**5.1.7 Example 7 – Requesting Remote Temperature (Logical Addressing)**  
+#### **5.1.7 Example 7 – Requesting Remote Temperature (Logical Addressing)**  
 
 `<< $PUWVK,10,1*XX<CR><LF>`
 
@@ -512,7 +513,7 @@ No host action required — incoming packet is delivered automatically.
 - PUWVM = IC_D2H_PT_ITG_RESP (temperature 28.50 °C, propTime 0.667 s)  
 - PUWVL = IC_D2H_PT_ITG_TMO (timeout)
 
-**5.1.8 Example 8 – Enabling Automatic Ambient Data Output (1-second interval)**  
+#### **5.1.8 Example 8 – Enabling Automatic Ambient Data Output (1-second interval)**  
 
 `<< $PUWV6,1,1000,1,1,1,1*03<CR><LF>`
 
@@ -529,7 +530,7 @@ No host action required — incoming packet is delivered automatically.
 - 1000 ms interval  
 - 1,1,1,1 = enable pressure, temperature, depth, VCC
 
-**5.1.9 Example 9 – Requesting Device Information (Alternative Syntax)**  
+#### **5.1.9 Example 9 – Requesting Device Information (Alternative Syntax)**  
 
 `<< $PUWV?,0*27<CR><LF>`
 
@@ -541,19 +542,19 @@ No host action required — incoming packet is delivered automatically.
 
 ### 5.2 Configuration Recipes
 
-1. **Set default settings (fresh water, Command mode disabled)**  
+#### 1. **Set default settings (fresh water, Command mode disabled)**  
 `$PUWV1,0,0,0.0,0,0,9.8067*XX<CR><LF>`
 
-2. **Enable Command mode by default, seawater salinity**  
+#### 2. **Enable Command mode by default, seawater salinity**  
 `$PUWV1,0,0,35.0,1,0,9.8067*XX<CR><LF>`
 
-3. **Disable automatic ambient data output**  
+#### 3. **Disable automatic ambient data output**  
 `$PUWV6,0,0,0,0,0,0*32<CR><LF>`
 
-5. **Enable ambient data every 5 seconds (pressure + temperature only)**  
+#### 5. **Enable ambient data every 5 seconds (pressure + temperature only)**  
 `$PUWV6,0,5000,1,1,0,0*XX<CR><LF>`
 
-7. **Request local depth (basic)**  
+#### 7. **Request local depth (basic)**  
 `$PUWV2,0,0,2*28<CR><LF>`
 
 (Checksums must be calculated correctly before sending.)
