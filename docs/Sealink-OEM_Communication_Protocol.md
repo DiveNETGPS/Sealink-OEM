@@ -7,55 +7,51 @@
 
 ## Contents
 
-1. Introduction  
-   1.1 Physical Layer  
-   1.2 NMEA0183 Protocol Standard  
+- **1.** [Introduction](#1-introduction)  
+  - **1.1** [Physical Layer](#11-physical-layer)  
+  - **1.2** [NMEA0183 Protocol Standard](#12-nmea0183-protocol-standard)  
 
-2. Sealink Commands & Responses  
+- **2.** [Sealink Commands & Responses](#2-sealink-commands--responses)  
+  - **2.1** [ACK Response](#21-ack-response)  
+  - **2.2** [Settings Write](#22-settings-write)  
+  - **2.3** [Remote Code Request](#23-remote-code-request)  
+  - **2.4** [Remote Code Response](#24-remote-code-response)  
+  - **2.5** [Remote Timeout](#25-remote-timeout)  
+  - **2.6** [Remote Asynchronous Input](#26-remote-asynchronous-input)  
+  - **2.7** [Ambient Data Configuration](#27-ambient-data-configuration)  
+  - **2.8** [Ambient Data Output](#28-ambient-data-output)  
+  - **2.9** [Device Information Request](#29-device-information-request)  
+  - **2.10** [Device Information](#210-device-information)  
+  - **2.11** [Packet Mode Settings Read](#211-packet-mode-settings-read)  
+  - **2.12** [Packet Mode Settings](#212-packet-mode-settings)  
+  - **2.13** [Packet Mode Settings Write](#213-packet-mode-settings-write)  
+  - **2.14** [Packet Send](#214-packet-send)  
+  - **2.15** [Packet Failed](#215-packet-failed)  
+  - **2.16** [Packet Delivered](#216-packet-delivered)  
+  - **2.17** [Packet Received](#217-packet-received)  
+  - **2.18** [Remote Request (Logical Addressing)](#218-remote-request-logical-addressing)  
+  - **2.19** [Remote Timeout (Logical Addressing)](#219-remote-timeout-logical-addressing)  
+  - **2.20** [Remote Response (Logical Addressing)](#220-remote-response-logical-addressing)  
+  - **2.21** [Incremental Data Configuration (USBL models only)](#221-incremental-data-configuration-usbl-models-only)  
+  - **2.22** [Incremental Data Output (USBL models only)](#222-incremental-data-output-usbl-models-only)  
 
-   2.1 ACK Response  
-   2.2 Settings Write  
-   2.3 Remote Code Request  
-   2.4 Remote Code Response  
-   2.5 Remote Timeout  
-   2.6 Remote Asynchronous Input  
-   2.7 Ambient Data Configuration  
-   2.8 Ambient Data Output  
-   2.9 Device Information Request  
-   2.10 Device Information  
-   2.11 Packet Mode Settings Read  
-   2.12 Packet Mode Settings  
-   2.13 Packet Mode Settings Write  
-   2.14 Packet Send  
-   2.15 Packet Failed  
-   2.16 Packet Delivered  
-   2.17 Packet Received  
-   2.18 Remote Request (Logical Addressing)  
-   2.19 Remote Timeout (Logical Addressing)  
-   2.20 Remote Response (Logical Addressing)  
-   2.21 Incremental Data Configuration (USBL models only)  
-   2.22 Incremental Data Output (USBL models only)  
+- **3.** [Operating Modes](#3-operating-modes)  
+  - **3.1** [Transparent Channel Mode](#31-transparent-channel-mode)  
+  - **3.2** [Command Mode](#32-command-mode)  
+  - **3.3** [Packet Mode](#33-packet-mode)  
 
-3. Operating Modes  
+- **4.** [Identifiers](#4-identifiers)  
+  - **4.1** [Error Codes](#41-error-codes)  
+  - **4.2** [Remote Command IDs](#42-remote-command-ids)  
 
-   3.1 Transparent Channel Mode  
-   3.2 Command Mode  
-   3.3 Packet Mode  
-
-4. Identifiers  
-
-   4.1 Error Codes  
-   4.2 Remote Command IDs  
-
-5. Appendix  
-
-   5.1 Command Mode Examples  
-      5.1.1 Example 1 – Requesting Device Information  
-      5.1.2 Example 2 – Requesting Remote Depth  
-      5.1.3 Example 3 – Ambient Data Configuration  
-      5.1.4 Example 4 – Enabling Packet Mode  
-      5.1.5 Example 5 – Sending a Packet  
-   5.2 Configuration Recipes  
+- **5.** [Appendix](#5-appendix)  
+  - **5.1** [Command Mode Examples](#51-command-mode-examples)  
+    - **5.1.1** [Example 1 – Requesting Device Information](#511-example-1-requesting-device-information)  
+    - **5.1.2** [Example 2 – Requesting Remote Depth](#512-example-2-requesting-remote-depth)  
+    - **5.1.3** [Example 3 – Ambient Data Configuration](#513-example-3-ambient-data-configuration)  
+    - **5.1.4** [Example 4 – Enabling Packet Mode](#514-example-4-enabling-packet-mode)  
+    - **5.1.5** [Example 5 – Sending a Packet](#515-example-5-sending-a-packet)  
+  - **5.2** [Configuration Recipes](#52-configuration-recipes)
 
 ## 1. Introduction
 
