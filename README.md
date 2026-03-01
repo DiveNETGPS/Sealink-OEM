@@ -58,11 +58,13 @@ Sealink-OEM supports interchangeable transducers for different mission profiles:
 
 Full documentation → see [docs](docs) folder.
 
-### Download & Resources
-- [Getting Started Guide](/docs/getting-started.md)
-- [Pinout & Interface](/docs/pinout-and-interface.md)
-- [Ranging Python Script](/resources/uart-getRange.py)
+### Downloads & Resources
+- [Getting Started](/docs/Sealink-OEM_Getting_Started.md)
+- [Pinout & Interface](/docs/Sealink-OEM_Pinout_and_Interface.md)
+- [Technical Drawing](/docs/Sealink-OEM_Technical_Drawing.pdf)
+- [Simple Ranging Script (Python)](/resources/uart-getRange.py)
 
+___
 Questions? Contact DiveNET support: support@divenetgps.com
 
 © 2026 DiveNET Subsea Wireless — All rights reserved.
