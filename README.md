@@ -20,12 +20,12 @@
 3. Send `$PUWV2,0,0,0*2A` to ping a remote unit.
 4. Receive `$PUWV3,0,0,tp,msr*hh` → range (approximate for testing) = tp × 1500 / 2 (m).
 5. Refine performance with improved distance formula and setting of correct ambient parameters.
+6. Use Python or similar to build automated control over serial connector XP5.
 
 Full documentation → see `/docs/` folder.
 
 ## Download & Resources
-- [Ranging Python Script](/resources/Sealink_Ranging_Script.py)
-- [Firmware Updater](/resources/DiveNET_Firmware_Updater.exe) (coming soon)
+- [Ranging Python Script](/resources/uart-getRange.py)
 
 Questions? Contact DiveNET support: support@divenetgps.com
 
