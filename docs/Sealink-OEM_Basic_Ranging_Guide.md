@@ -108,12 +108,13 @@ Example output (if successful):
 
 Sound speed varies with temperature, salinity, and depth. Use these approximate values or measure on-site.
 
-Water Type          Temp (°C)   Salinity (ppt)   Depth (m)   Sound Speed (m/s)  
-Freshwater          20          0                0           1482  
-Seawater (typical)  20          35               0           1522  
-Seawater            10          35               0           1490  
-Seawater            25          35               0           1534  
-Deep ocean (avg)    4           35               1000+       1480–1550  
+| Water Type          | Temp (°C) | Salinity (ppt) | Depth (m) | Sound Speed (m/s) |
+|---------------------|-----------|----------------|-----------|-------------------|
+| Freshwater          | 20        | 0              | 0         | 1482              |
+| Seawater (typical)  | 20        | 35             | 0         | 1522              |
+| Seawater            | 10        | 35             | 0         | 1490              |
+| Seawater            | 25        | 35             | 0         | 1534              |
+| Deep ocean (avg)    | 4         | 35             | 1000+     | 1480–1550         |
 
 ## 5. Tips for Reliable Ranging
 
@@ -135,5 +136,6 @@ ___
 Questions or need help with custom ranging setups? Contact support@divenetgps.com.
 
 Last updated: March 2026
+
 
 
