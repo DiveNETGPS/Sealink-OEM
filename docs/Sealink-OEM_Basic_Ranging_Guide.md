@@ -1,6 +1,6 @@
-# Sealink-OEM Ranging Guide
+# DiveNET: Sealink-OEM - Basic Ranging Guide (UART)
 
-This guide explains how to perform basic range (distance) measurements using the Sealink-OEM acoustic modem. The system uses two-way travel time (propagation time) to calculate distance between two units.
+This guide explains how to perform basic range (distance) measurements using the Sealink-OEM acoustic modem over a serial (UART) interface. The system uses two-way travel time (propagation time) to calculate distance between two units.
 
 ## Key principle
 
@@ -21,7 +21,7 @@ Distance is calculated as:
 - At least two Sealink-OEM units powered and at least one connected via UART (9600 baud, 8N1, 3.3 V logic) for serial communication with a host system.
 - Units must be on the same code channel (txChID and rxChID typically both 0 by default; configurable via protocol commands).
 - Python environment with `pyserial` package installed on host machine.
-  - ** Note on XP5 pin 3 (SVC/CMD): This pin functions as a digital strobe output for transmit/receive events. It can be used by external systems for independent ToF timing. It does not improve nominal precision. No user action is required for normal UART protocol operation. **
+  - **Note on XP5 pin 3 (SVC/CMD): This pin functions as a digital strobe output for transmit/receive events. It can be used by external systems for independent ToF timing. It does not improve nominal precision. No user action is required for normal UART protocol operation.**
 
 ### Dryland functional testing
 - Place transducers within six inches of each other.
@@ -37,9 +37,10 @@ Use any serial terminal (PuTTY, Tera Term, screen, minicom, etc.) at 9600 8N1.
 
 ### Step-by-step example:
 
-** 1. Connect to the local (initiator) unit via UART.
+**1. Connect to the local (initiator) unit via UART.**
 
-** 2. Send a ping request:
+
+**2. Send a ping request:**
 
 `$PUWV2,0,0,0*2A<CR><LF>`
 
@@ -50,7 +51,8 @@ Use any serial terminal (PuTTY, Tera Term, screen, minicom, etc.) at 9600 8N1.
 
 Note: The ping command does not include a target address. Units must be pre-configured with matching channels.
 
-** 3. Immediate acknowledgment from local modem (ACK):
+
+**3. Immediate acknowledgment from local modem (ACK):**
 
 Typical ACK format:
 `$PUWV0,cmdID,errCode*checksum<CR><LF>`
@@ -63,7 +65,8 @@ Example:
 
 If `errCode` ≠ `0`, look up error code (e.g., invalid syntax, transmitter busy).
 
-** 4. Wait for response from the remote unit (automatic reply if in range and listening):
+
+**4. Wait for response from the remote unit (automatic reply if in range and listening):**
 
 Typical response format:
 `$PUWV3,txChID,rcCmdID,propTime,MSR,value,azimuth*checksum<CR><LF>`
@@ -74,7 +77,8 @@ Example:
    - `propTime` = one-way propagation time in seconds
    - `MSR` = mean main lobe to side-peak ratio in dB (signal quality indicator)
 
-** 5. Calculate range:
+
+**5. Calculate range:**
 
 `range ≈ 0.002489 × 1500 = 3.7335 m`
 
@@ -98,7 +102,7 @@ Basic usage:
 Example output (if successful):
 `Range: 3733.5 m`
 
-** Note: The test script is designed for basic range testing only. For accurate results, add improved distance formula, set accurate ambient parameters, and multiple result avereging. **
+**Note: The test script is designed for basic range testing only. For accurate results, add improved distance formula, set accurate ambient parameters, and multiple result avereging.**
 
 ## 4. Sound Speed Compensation Table
 
@@ -127,7 +131,8 @@ Deep ocean (avg)    4           35               1000+       1480–1550
 - Error in ACK (`$PUWV0`) → Check `errCode` (e.g., 3 = transmitter busy, 4 = out of range); resolve before retrying.
 
 For advanced protocol commands (set/query channel/address, etc.), see [Sealink-OEM_Communication_Protocol.md](./Sealink-OEM_Communication_Protocol.md).
-
+___
 Questions or need help with custom ranging setups? Contact support@divenetgps.com.
 
 Last updated: March 2026
+
