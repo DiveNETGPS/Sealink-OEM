@@ -8,7 +8,7 @@
 - Extremely compact PCB: 73.5 mm × 44 mm
 - Reliable long-range communication
 - Multi-mode functionality
-- Communication envelope up to 3,000 m range / 1,000 m depth (transducer-dependent)
+- Communication envelope up to 3,000 m / 1,000 m depth (transducer-dependent)
 - Up to 634 bps bandwidth
 - 255 logical addresses (responders) and 20 code channels
 - 9600 bps UART interface (3.3 V logic)
@@ -16,7 +16,7 @@
 - GNSS and RF module expansion
 - Built-in Time-of-Flight (ToF) ranging with ~0.15 m resolution
 - Tx/Rx strobe output for external timestamp capture
-- Designed for scalable subsea IoT, ROV, AUV, diver systems, and custom integrations
+- Designed to power subsea IoT and professional ROV/AUV/Diver applications
 
 ### Primary Specifications
 - **Board size**: 73.5 mm × 44 mm
@@ -52,9 +52,9 @@ Sealink-OEM supports interchangeable transducers for different mission profiles:
 1. Connect power (+12 V nominal) to XP2 and transducer to XP1.  
 2. Use any serial terminal (PuTTY, Tera Term, CoolTerm, minicom) at 9600 8N1.  
 3. Send `$PUWV2,0,0,0*2A` to ping a remote unit.  
-4. Receive `$PUWV3,0,0,tp,msr*hh` → approximate range = tp × 1500 / 2 (m).  
-5. Refine with correct sound speed (adjust for temperature/salinity).  
-6. For automation, use Python or similar over XP5 UART.
+- Expect an immediate `$PUWV0` automatic acknowledgement response (e.g., `$PUWV0,2,0*XX`) confirming command acceptance. If errCode ≠ 0, check setup.
+4. Receive main response `$PUWV3,0,0,propTime,MSR*hh` → approximate range = propTime (seconds) × 1500 (m/s).  
+5. Refine with correct sound speed (adjust for temperature/salinity/depth).
 
 Full documentation → see [docs](docs) folder.
 
@@ -63,6 +63,7 @@ Full documentation → see [docs](docs) folder.
 - [Pinout & Interface](/docs/Sealink-OEM_Pinout_and_Interface.md)
 - [Communication Protocol](/docs/Sealink-OEM_Communication_Protocol.md)
 - [Technical Drawing](/docs/Sealink-OEM_Technical_Drawing.pdf)
+- [Basic Ranging Guide](/docs/Sealink-OEM_Ranging_Guide.md)
 - [Simple Ranging Script (Python)](/resources/uart-getRange.py)
 
 ___
