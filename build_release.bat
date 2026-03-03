@@ -11,8 +11,8 @@ if not exist "%PY%" (
     exit /b 1
 )
 
-if not exist "Sealink-OEM-main\resources\sealink_gui.py" (
-    echo Missing GUI script: Sealink-OEM-main\resources\sealink_gui.py
+if not exist "product\resources\sealink_gui.py" (
+    echo Missing GUI script: product\resources\sealink_gui.py
     pause
     exit /b 1
 )
@@ -24,7 +24,7 @@ if not exist "test_listener.py" (
 )
 
 echo Installing/updating Python dependencies...
-"%PY%" -m pip install -r "Sealink-OEM-main\resources\requirements.txt"
+"%PY%" -m pip install -r "product\resources\requirements.txt"
 if errorlevel 1 goto :fail
 
 "%PY%" -m pip install --upgrade pyinstaller
@@ -36,7 +36,7 @@ if exist dist rmdir /s /q dist
 if exist release rmdir /s /q release
 
 echo Building GUI executable...
-"%PY%" -m PyInstaller --noconfirm --clean --onefile --windowed --name SealinkGUI "Sealink-OEM-main\resources\sealink_gui.py"
+"%PY%" -m PyInstaller --noconfirm --clean --onefile --windowed --name SealinkGUI "product\resources\sealink_gui.py"
 if errorlevel 1 goto :fail
 
 echo Building listener executable...

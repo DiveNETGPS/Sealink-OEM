@@ -3,7 +3,7 @@ setlocal
 
 cd /d "%~dp0"
 
-set "SRC_ROOT=Sealink-OEM-main"
+set "SRC_ROOT=product"
 set "OUT=release\Sealink-Integrator-Pack"
 
 if not exist "%SRC_ROOT%\resources\uart-getRange.py" (

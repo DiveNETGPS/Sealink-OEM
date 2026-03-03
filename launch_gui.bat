@@ -4,7 +4,7 @@ setlocal
 REM Move to this BAT's folder (workspace root)
 cd /d "%~dp0"
 
-set "SCRIPT=Sealink-OEM-main\resources\sealink_gui.py"
+set "SCRIPT=product\resources\sealink_gui.py"
 
 if not exist "%SCRIPT%" (
     echo Could not find %SCRIPT%

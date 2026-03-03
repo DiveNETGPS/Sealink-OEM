@@ -1,6 +1,6 @@
 # DiveNET: Sealink-OEM Subsea Wireless Modem
 
-<img src="/docs/images/img002.jpg" alt="Sealink-OEM" width="50%">
+<img src="docs/images/img002.jpg" alt="Sealink-OEM" width="50%">
 
 **Sealink-OEM** is a compact, high-reliability underwater acoustic modem and communication platform produced by DiveNET Subsea Wireless (Beringia Enterprises LLC).
 
@@ -59,12 +59,12 @@ Sealink-OEM supports interchangeable transducers for different mission profiles:
 Full documentation → see [docs](docs) folder.
 
 ### Downloads & Resources
-- [Getting Started](/docs/Sealink-OEM_Getting_Started.md)
-- [Pinout & Interface](/docs/Sealink-OEM_Pinout_and_Interface.md)
-- [Communication Protocol](/docs/Sealink-OEM_Communication_Protocol.md)
-- [Technical Drawing](/docs/Sealink-OEM_Technical_Drawing.pdf)
-- [Basic Ranging Guide](/docs/Sealink-OEM_Basic_Ranging_Guide.md)
-- [Simple Ranging Script (Python)](/resources/uart-getRange.py)
+- [Getting Started](docs/Sealink-OEM_Getting_Started.md)
+- [Pinout & Interface](docs/Sealink-OEM_Pinout_and_Interface.md)
+- [Communication Protocol](docs/Sealink-OEM_Communication_Protocol.md)
+- [Technical Drawing](docs/Sealink-OEM_Technical_Drawing.pdf)
+- [Basic Ranging Guide](docs/Sealink-OEM_Basic_Ranging_Guide.md)
+- [Simple Ranging Script (Python)](resources/uart-getRange.py)
 
 ___
 Questions? Contact DiveNET support: support@divenetgps.com

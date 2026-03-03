@@ -5,7 +5,7 @@ REM Move to this BAT's folder (workspace root)
 cd /d "%~dp0"
 
 set "LISTENER=test_listener.py"
-set "GUI=Sealink-OEM-main\resources\sealink_gui.py"
+set "GUI=product\resources\sealink_gui.py"
 
 if not exist "%LISTENER%" (
     echo Could not find %LISTENER%
