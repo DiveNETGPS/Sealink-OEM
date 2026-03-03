@@ -32,12 +32,6 @@ This document summarizes the **mandatory requirements** for operating the Sealin
 - Dry-land testing is supported only for basic functional verification (transducers within ~6 inches).  
 - **Note**: Dry-land operation does not guarantee payload data integrity.
 
-### Testing App / Release Validation Policy
-- The packaged Windows testing app for non-technical users is the Operator Package (`release/Sealink-OEM`).
-- GitHub synchronization and documentation-only updates do **not** require issuing a new test app build.
-- Issue a new test app build only when executable behavior changes (for example, runtime scripts, GUI/listener logic, protocol handling, or packaged launch flow).
-- Keep one designated “published test baseline” release for team testing until a new candidate build is intentionally created.
-
 ### Firmware
 - Minimum version: ≥1.2.0 (command mode always enabled, SVC/CMD repurposed as strobe output)
 
