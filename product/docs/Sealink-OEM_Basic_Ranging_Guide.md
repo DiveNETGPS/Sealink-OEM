@@ -88,21 +88,25 @@ The repo currently includes a [basic ranging script](../resources/uart-getRange.
 
 This script:
 
-- Opens a serial port (set correct port name in the code)
+- Opens a serial port (via `--port` argument or interactive prompt)
 - Sends a single ping request using sentence `$PUWV2,0,0,0*2A`
 - Waits for and parses a `$PUWV3` sentence response
-- Prints the calculated range using a hardcoded sound speed of 1500 m/s
+- Calculates sound speed from user inputs (depth, temperature, salinity)
+- Prints propagation time and calculated slant range
 
 Basic usage (from repository root):
 
-1. Edit the script to set your COM port (e.g., COM3 on Windows, /dev/ttyUSB0 on Linux/Mac).
-2. Run: `python resources/uart-getRange.py`
-3. Observe the printed range (or error if no response).
+1. Run: `python resources/uart-getRange.py`
+2. Enter prompted values (port, channels, depth, temperature, salinity), or provide them as CLI arguments.
+3. Observe the printed propagation time and range (or error if no response).
+
+Example with explicit arguments:
+`python resources/uart-getRange.py --port COM3 --tx 0 --rx 0 --test ping --depth 5 --temp 15 --salinity 35`
 
 Example output (if successful):
 `Range: 3733.5 m`
 
-**Note: The test script is designed for basic range testing only. For accurate results, add improved distance formula, set accurate ambient parameters, and multiple result avereging.**
+**Note: The script is designed for basic range testing only. For improved accuracy, use measured local environmental values and average multiple runs.**
 
 ## 4. Sound Speed Compensation Table
 
