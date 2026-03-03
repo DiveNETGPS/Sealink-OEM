@@ -2,7 +2,7 @@
 
 This guide explains how to perform basic range (distance) measurements using the Sealink-OEM acoustic modem over a serial (UART) interface. The system uses two-way travel time (propagation time) to calculate distance between two units.
 
-## Key principle
+## Key Principle
 
 The Sealink-OEM measures the acoustic propagation time from a ping request to the response.  
 The reported `propTime` is the **one-way** propagation time in seconds (from initiator to responder).
@@ -17,7 +17,7 @@ Distance is calculated as:
 
 ## 1. Requirements
 
-### General requirements
+### General Requirements
 - At least two Sealink-OEM units powered and at least one connected via UART (9600 baud, 8N1, 3.3 V logic) for serial communication with a host system.
 - Units must be on the same code channel (`txChID` and `rxChID` typically both 0 by default; configurable via protocol commands).
 - Python environment with `pyserial` package installed on host machine.
@@ -29,13 +29,13 @@ Distance is calculated as:
 
 ### Water trials
 - Devices positioned inside direct line of sight (LoS) and within maximum acoustic range (1 km or 3 km depending on transducer option).
-- Supportive testing conditions - preferably open, calm waters; transducers stationary and level (approximately) with at least 3 m to both surface and bottom, and removed from any adjacent large, reflective surfaces.
+- Supportive testing conditions: preferably open, calm waters; transducers stationary and approximately level; at least 3 m to both surface and bottom; and separated from adjacent large reflective surfaces.
 
 ## 2. Manual Ranging (via Serial Terminal)
 
 Use any serial terminal (PuTTY, Tera Term, screen, minicom, etc.) at 9600 8N1.
 
-### Step-by-step example:
+### Step-by-step Example
 
 **1. Connect to the local (initiator) unit via UART.**
 
@@ -132,7 +132,7 @@ Sound speed varies with temperature, salinity, and depth. Use these approximate 
 
 ## 6. Tips for Reliable Ranging
 
-- Max range — Up to 1,000 m (SW-T100 transducer) / 3000 m (SW-T200/300 transducers) in supportive conditions (clear, calm, open water, low noise).
+- Max range — Up to 1,000 m (SW-T100 transducer) / 3,000 m (SW-T200/300 transducers) in supportive conditions (clear, calm, open water, low noise).
 - Shallow water / multipath — Use averaging (run script multiple times); avoid strong surface/bottom reflections or large reflective surfaces.
 - Signal quality (MSR) — Higher dB values indicate cleaner link.
 - No response? — Check: matching channels? Powered on? In water? Transducer connected?

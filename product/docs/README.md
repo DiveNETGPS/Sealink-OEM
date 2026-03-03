@@ -13,7 +13,7 @@ Use this index to navigate modem documentation and software tooling guides.
 ## Utility App and Tools
 
 - [Sealink-OEM Utility App Guide](Sealink-OEM_Utility_App_Guide.md)
-- [CLI/Test Script (`uart-getRange.py`)](../resources/uart-getRange.py)
+- [CLI/Test Script (uart-getRange.py)](../resources/uart-getRange.py)
 
 ## Integration References
 
