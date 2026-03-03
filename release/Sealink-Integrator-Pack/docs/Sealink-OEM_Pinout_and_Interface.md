@@ -86,7 +86,7 @@
 - For independent ToF, use SVC/CMD strobe on XP5 Pin 3 with external timestamp capture.
 
 ___
-![Sealink-OEM Technical Drawing](images/Sealink-OEM_drawing.jpg)
+Technical drawing: [Sealink-OEM_Technical_Drawing.pdf](Sealink-OEM_Technical_Drawing.pdf)
 ___
 Continue to:
 - [Getting Started](Sealink-OEM_Getting_Started.md)

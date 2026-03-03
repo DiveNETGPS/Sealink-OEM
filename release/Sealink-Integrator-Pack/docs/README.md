@@ -17,7 +17,7 @@ Use this index to navigate modem documentation and software tooling guides.
 
 ## Integration References
 
-- [Integrator Platform Guide](../integrations/PLATFORM_INTEGRATOR_GUIDE.md)
+- [Integrator Platform Guide](../PLATFORM_INTEGRATOR_GUIDE.md)
 - [Arduino Example](../integrations/arduino/SealinkOEM_Basic.ino)
 - [Raspberry Pi CLI Runner](../integrations/raspberry-pi/run_sealink_cli.sh)
 
