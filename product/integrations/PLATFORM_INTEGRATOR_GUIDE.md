@@ -58,4 +58,5 @@ Hardware requirements:
 ## macOS policy
 macOS is not packaged by default.
 
-If requested by a partner, provide source-based CLI instructions (same pattern as Linux) instead of maintaining a separate turnkey macOS release.
+For partner requests, provide source-based CLI instructions (same pattern as Linux).
+Do not maintain a separate turnkey macOS package.
