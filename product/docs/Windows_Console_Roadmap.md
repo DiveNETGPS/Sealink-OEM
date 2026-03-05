@@ -28,16 +28,16 @@ Observed patterns to replicate:
 
 ### Phase 1: CLI core and parity baseline
 
-- [ ] Unified executable entrypoint for Windows console usage.
-- [ ] Link/connect command (`link`) with port and baud options.
-- [ ] Device info command (`device-info`) and structured output.
-- [ ] Remote ping command (`ping`) with channel options.
-- [ ] Human output and machine-readable JSON output mode.
+- [x] Unified executable entrypoint for Windows console usage.
+- [x] Link/connect command (`link`) with port and baud options.
+- [x] Device info command (`device-info`) and structured output.
+- [x] Remote ping command (`ping`) with channel options.
+- [x] Human output and machine-readable JSON output mode.
 
 ### Phase 2: Session and workflow ergonomics
 
-- [ ] Interactive shell mode (`shell`) with command history.
-- [ ] Persistent profile support (default port/channels/env values).
+- [x] Interactive shell mode (`shell`) with command history.
+- [x] Persistent profile support (default port/channels/env values).
 - [ ] Unified logging (`--log-file`) and verbose diagnostics (`--debug`).
 - [ ] Command aliases for common workflows.
 
@@ -66,8 +66,8 @@ Before replacing current primary workflow, require:
 
 ## Near-term implementation order
 
-1. Finish CLI scaffold command contracts.
-2. Implement serial transport wrapper and protocol adapter.
-3. Implement `link`, `device-info`, and `ping` end-to-end.
-4. Add JSON output mode and file logging.
-5. Add interactive shell mode.
+1. Add unified logging (`--log-file`) and verbose diagnostics (`--debug`).
+2. Add command aliases for high-frequency operator workflows.
+3. Expand `monitor` from scaffold to functional telemetry loop.
+4. Add CSV export for monitor and test sessions.
+5. Start packet-mode command group design.

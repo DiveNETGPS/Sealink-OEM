@@ -11,12 +11,18 @@ import argparse
 import importlib.util
 import json
 import os
+import shlex
 import sys
 import time
 from dataclasses import asdict, dataclass
 from typing import Any
 
 from serial.tools import list_ports
+
+try:
+    import readline
+except ImportError:
+    readline = None
 
 
 @dataclass
@@ -76,6 +82,7 @@ def _load_uart_helpers() -> tuple[Any, Any, Any, Any]:
 
 SERIAL, CALCULATE_NMEA_CHECKSUM, SEND_RC_PING, READ_RESPONSE = _load_uart_helpers()
 DEFAULT_PROFILE_PATH = os.path.join(os.path.expanduser("~"), ".sealink_console_profile.json")
+DEFAULT_HISTORY_PATH = os.path.join(os.path.expanduser("~"), ".sealink_console_history")
 
 
 def _open_serial(port: str, baud: int):
@@ -115,6 +122,28 @@ def _resolve_port_and_baud(args: argparse.Namespace, profile: dict[str, Any]) ->
     port = args.port or profile.get("default_port")
     baud = args.baud if args.baud is not None else int(profile.get("default_baud", 9600))
     return port, baud
+
+
+def _load_shell_history(path: str) -> None:
+    if readline is None:
+        return
+    try:
+        read_history = getattr(readline, "read_history_file", None)
+        if os.path.isfile(path) and callable(read_history):
+            read_history(path)
+    except Exception:
+        return
+
+
+def _save_shell_history(path: str) -> None:
+    if readline is None:
+        return
+    try:
+        write_history = getattr(readline, "write_history_file", None)
+        if callable(write_history):
+            write_history(path)
+    except Exception:
+        return
 
 
 def _read_first_nonempty_line(ser, timeout_sec: float) -> str | None:
@@ -327,6 +356,60 @@ def cmd_monitor(args: argparse.Namespace) -> ConsoleResult:
     )
 
 
+def cmd_shell(args: argparse.Namespace) -> ConsoleResult:
+    shell_parser = build_parser()
+    history_path = args.history_file or DEFAULT_HISTORY_PATH
+    _load_shell_history(history_path)
+
+    print("Sealink console shell. Type 'help' for usage, 'exit' to quit.")
+    while True:
+        try:
+            line = input(args.prompt)
+        except EOFError:
+            print()
+            break
+        except KeyboardInterrupt:
+            print()
+            continue
+
+        line = line.strip()
+        if not line:
+            continue
+        if line.lower() in {"exit", "quit"}:
+            break
+        if line.lower() in {"help", "?"}:
+            print("Commands: link, device-info, ping, list-ports, profile-set, monitor")
+            print("Use command-specific --help for options, for example: ping --help")
+            continue
+
+        try:
+            tokens = shlex.split(line)
+        except ValueError as exc:
+            print(f"[ERROR] shell: {exc}")
+            continue
+
+        if not tokens:
+            continue
+        if tokens[0] == "shell":
+            print("[ERROR] shell: nested shell is not supported.")
+            continue
+
+        if args.profile and "--profile" not in tokens:
+            tokens.extend(["--profile", args.profile])
+        if args.json and "--json" not in tokens:
+            tokens.append("--json")
+
+        try:
+            nested_args = shell_parser.parse_args(tokens)
+        except SystemExit:
+            continue
+
+        _execute_args(nested_args)
+
+    _save_shell_history(history_path)
+    return ConsoleResult(ok=True, command="shell", message="Shell session ended.")
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="sealink-console",
@@ -378,14 +461,23 @@ def build_parser() -> argparse.ArgumentParser:
     p_mon.add_argument("--interval", type=float, default=1.0, help="Poll interval seconds")
     p_mon.set_defaults(handler=cmd_monitor)
 
+    p_shell = sub.add_parser("shell", parents=[output_parent], help="Start interactive shell mode")
+    p_shell.add_argument("--prompt", default="sealink> ", help="Shell prompt text")
+    p_shell.add_argument("--history-file", help="History file path")
+    p_shell.set_defaults(handler=cmd_shell)
+
     return parser
+
+
+def _execute_args(args: argparse.Namespace) -> int:
+    result = args.handler(args)
+    return _print_result(result, as_json=getattr(args, "json", False))
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
-    result = args.handler(args)
-    return _print_result(result, as_json=getattr(args, "json", False))
+    return _execute_args(args)
 
 
 if __name__ == "__main__":
