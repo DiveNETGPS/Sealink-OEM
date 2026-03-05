@@ -20,6 +20,7 @@ This guide covers packaged Windows usage and local repository launch workflows f
 	- Windows/Linux/macOS for Python CLI script usage
 	- Raspberry Pi/Linux shell script usage under `integrations/raspberry-pi`
 	- Arduino IDE for `integrations/arduino/SealinkOEM_Basic.ino`
+- Detailed venv creation/activation commands are documented in `integrations/PLATFORM_INTEGRATOR_GUIDE.md`.
 
 ## 1. Scope
 
