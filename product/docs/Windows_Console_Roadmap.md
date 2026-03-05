@@ -39,7 +39,7 @@ Observed patterns to replicate:
 - [x] Interactive shell mode (`shell`) with command history.
 - [x] Persistent profile support (default port/channels/env values).
 - [x] Unified logging (`--log-file`) and verbose diagnostics (`--debug`).
-- [ ] Command aliases for common workflows.
+- [x] Command aliases for common workflows.
 
 ### Phase 3: Sensor and monitoring features
 
@@ -66,8 +66,8 @@ Before replacing current primary workflow, require:
 
 ## Near-term implementation order
 
-1. Add command aliases for high-frequency operator workflows.
-2. Expand `monitor` from scaffold to functional telemetry loop.
-3. Add CSV export for monitor and test sessions.
-4. Start packet-mode command group design.
-5. Add a concise operator command reference page for shell usage.
+1. Expand `monitor` from scaffold to functional telemetry loop.
+2. Add CSV export for monitor and test sessions.
+3. Start packet-mode command group design.
+4. Add a concise operator command reference page for shell usage.
+5. Add response formatting presets for operator vs automation output.

@@ -117,6 +117,12 @@ def _load_uart_helpers() -> tuple[Any, Any, Any, Any]:
 SERIAL, CALCULATE_NMEA_CHECKSUM, SEND_RC_PING, READ_RESPONSE = _load_uart_helpers()
 DEFAULT_PROFILE_PATH = os.path.join(os.path.expanduser("~"), ".sealink_console_profile.json")
 DEFAULT_HISTORY_PATH = os.path.join(os.path.expanduser("~"), ".sealink_console_history")
+COMMAND_ALIASES = {
+    "lp": "list-ports",
+    "di": "device-info",
+    "ps": "profile-set",
+    "sh": "shell",
+}
 
 
 def _open_serial(port: str, baud: int):
@@ -156,6 +162,18 @@ def _resolve_port_and_baud(args: argparse.Namespace, profile: dict[str, Any]) ->
     port = args.port or profile.get("default_port")
     baud = args.baud if args.baud is not None else int(profile.get("default_baud", 9600))
     return port, baud
+
+
+def _normalize_command_alias(tokens: list[str], args_for_debug: argparse.Namespace | None = None) -> list[str]:
+    if not tokens:
+        return tokens
+    cmd = tokens[0]
+    mapped = COMMAND_ALIASES.get(cmd)
+    if not mapped:
+        return tokens
+    if args_for_debug is not None:
+        _debug_print(args_for_debug, f"alias expanded: {cmd} -> {mapped}")
+    return [mapped, *tokens[1:]]
 
 
 def _load_shell_history(path: str) -> None:
@@ -384,6 +402,16 @@ def cmd_profile_set(args: argparse.Namespace) -> ConsoleResult:
     )
 
 
+def cmd_aliases(args: argparse.Namespace) -> ConsoleResult:
+    _debug_print(args, "cmd_aliases invoked")
+    return ConsoleResult(
+        ok=True,
+        command="aliases",
+        message=f"Loaded {len(COMMAND_ALIASES)} command alias(es).",
+        data={"aliases": COMMAND_ALIASES},
+    )
+
+
 def cmd_monitor(args: argparse.Namespace) -> ConsoleResult:
     return ConsoleResult(
         ok=True,
@@ -418,7 +446,8 @@ def cmd_shell(args: argparse.Namespace) -> ConsoleResult:
         if line.lower() in {"exit", "quit"}:
             break
         if line.lower() in {"help", "?"}:
-            print("Commands: link, device-info, ping, list-ports, profile-set, monitor")
+            print("Commands: link, device-info, ping, list-ports, profile-set, aliases, monitor")
+            print("Aliases: " + ", ".join(f"{k}->{v}" for k, v in COMMAND_ALIASES.items()))
             print("Use command-specific --help for options, for example: ping --help")
             continue
 
@@ -430,6 +459,7 @@ def cmd_shell(args: argparse.Namespace) -> ConsoleResult:
 
         if not tokens:
             continue
+        tokens = _normalize_command_alias(tokens, args_for_debug=args)
         if tokens[0] == "shell":
             print("[ERROR] shell: nested shell is not supported.")
             continue
@@ -503,6 +533,9 @@ def build_parser() -> argparse.ArgumentParser:
     p_profile.add_argument("--default-rx", type=int, help="Default receive channel")
     p_profile.set_defaults(handler=cmd_profile_set)
 
+    p_aliases = sub.add_parser("aliases", parents=[output_parent], help="Show command aliases")
+    p_aliases.set_defaults(handler=cmd_aliases)
+
     p_mon = sub.add_parser("monitor", parents=[output_parent], help="Start monitor mode")
     p_mon.add_argument("--interval", type=float, default=1.0, help="Poll interval seconds")
     p_mon.set_defaults(handler=cmd_monitor)
@@ -523,7 +556,9 @@ def _execute_args(args: argparse.Namespace) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
-    args = parser.parse_args(argv)
+    raw_tokens = list(sys.argv[1:] if argv is None else argv)
+    normalized_tokens = _normalize_command_alias(raw_tokens)
+    args = parser.parse_args(normalized_tokens)
     return _execute_args(args)
 
 
