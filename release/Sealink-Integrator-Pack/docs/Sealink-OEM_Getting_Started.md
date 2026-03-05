@@ -32,11 +32,12 @@ For scripting, logging, or integration, any language that can open a serial port
 
 We recommend Python:  
 
-- Install Python (free from python.org) with `pyserial` package 
+- Install Python 3.10+ (free from python.org) with `pyserial` package 
 - Use our sample Python script for initial testing and familiarization.
 - The script accepts command-line options (for example `--port`, `--tx`, `--rx`, `--test`) and prompts for any missing values.
 - For interactive operation, use the Sealink-OEM Utility app and enter port/channels/environment values in the app fields.
 - See [Sealink-OEM Utility App Guide](Sealink-OEM_Utility_App_Guide.md) for app workflows.
+- For step-by-step virtual environment setup commands, see [Integrator Platform Guide](../integrations/PLATFORM_INTEGRATOR_GUIDE.md).
 
 Other options:  
 - C# (Windows apps)  

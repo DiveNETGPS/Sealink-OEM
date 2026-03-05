@@ -1,23 +1,36 @@
 """
-Simple listener on COM7 for testing - run this in a separate terminal first
+Simple listener for testing - run this in a separate terminal first.
 """
+import argparse
 import serial
 import time
 
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Sealink test listener')
+    parser.add_argument('--port', default='COM7', help='Serial port to open (default: COM7)')
+    parser.add_argument('--duration', type=int, default=120, help='Listen duration in seconds (default: 120)')
+    return parser.parse_args()
+
+
+args = parse_args()
+port_name = args.port
+listen_duration = args.duration
+
 try:
-    print("Opening COM7 for listening...")
+    print(f"Opening {port_name} for listening...")
     ser = serial.Serial(
-        port='COM7',
+        port=port_name,
         baudrate=9600,
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
         bytesize=serial.EIGHTBITS,
         timeout=1
     )
-    print("COM7 opened successfully. Listening for 120 seconds...")
+    print(f"{port_name} opened successfully. Listening for {listen_duration} seconds...")
     
     start_time = time.time()
-    while time.time() - start_time < 120:
+    while time.time() - start_time < listen_duration:
         line = ser.readline()
         if line:
             text = line.decode('ascii', errors='ignore').strip()
@@ -63,6 +76,6 @@ try:
         time.sleep(0.1)
     
     ser.close()
-    print("COM7 closed.")
+    print(f"{port_name} closed.")
 except Exception as e:
     print(f"Error: {e}")

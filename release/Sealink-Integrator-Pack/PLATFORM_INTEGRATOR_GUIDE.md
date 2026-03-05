@@ -19,6 +19,36 @@ Send `release/Sealink-Integrator-Pack` (or its zip) created by:
 
 This package covers Linux/Raspberry Pi and Arduino workflows in a single technical bundle.
 
+## Python Environment Setup (Integrator CLI)
+
+Run these commands from the `Sealink-Integrator-Pack` root folder.
+
+### Windows (PowerShell)
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r resources\requirements.txt
+```
+
+If PowerShell blocks script execution:
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+### Linux / Raspberry Pi / macOS
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r resources/requirements.txt
+```
+
+### Basic CLI Validation
+```bash
+python resources/uart-getRange.py --port <PORT> --test ping --tx 0 --rx 0
+```
+
+Replace `<PORT>` with the host serial interface (for example `COM3` on Windows or `/dev/ttyUSB0` on Linux).
+
 ## Integrator targets included
 
 ### Raspberry Pi / Linux
