@@ -16,6 +16,8 @@ import time
 from dataclasses import asdict, dataclass
 from typing import Any
 
+from serial.tools import list_ports
+
 
 @dataclass
 class ConsoleResult:
@@ -73,6 +75,7 @@ def _load_uart_helpers() -> tuple[Any, Any, Any, Any]:
 
 
 SERIAL, CALCULATE_NMEA_CHECKSUM, SEND_RC_PING, READ_RESPONSE = _load_uart_helpers()
+DEFAULT_PROFILE_PATH = os.path.join(os.path.expanduser("~"), ".sealink_console_profile.json")
 
 
 def _open_serial(port: str, baud: int):
@@ -86,6 +89,34 @@ def _open_serial(port: str, baud: int):
     )
 
 
+def _load_profile(path: str | None) -> dict[str, Any]:
+    profile_path = path or DEFAULT_PROFILE_PATH
+    if not os.path.isfile(profile_path):
+        return {}
+    try:
+        with open(profile_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _save_profile(path: str | None, profile_data: dict[str, Any]) -> str:
+    profile_path = path or DEFAULT_PROFILE_PATH
+    parent = os.path.dirname(profile_path)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
+    with open(profile_path, "w", encoding="utf-8") as f:
+        json.dump(profile_data, f, indent=2)
+    return profile_path
+
+
+def _resolve_port_and_baud(args: argparse.Namespace, profile: dict[str, Any]) -> tuple[str | None, int]:
+    port = args.port or profile.get("default_port")
+    baud = args.baud if args.baud is not None else int(profile.get("default_baud", 9600))
+    return port, baud
+
+
 def _read_first_nonempty_line(ser, timeout_sec: float) -> str | None:
     start = time.time()
     while time.time() - start < timeout_sec:
@@ -96,8 +127,17 @@ def _read_first_nonempty_line(ser, timeout_sec: float) -> str | None:
 
 
 def cmd_link(args: argparse.Namespace) -> ConsoleResult:
+    profile = _load_profile(args.profile)
+    port, baud = _resolve_port_and_baud(args, profile)
+    if not port:
+        return ConsoleResult(
+            ok=False,
+            command="link",
+            message="No serial port specified. Use --port or set a profile default.",
+        )
+
     try:
-        with _open_serial(args.port, args.baud) as ser:
+        with _open_serial(port, baud) as ser:
             body = "PUWV?,0"
             checksum = CALCULATE_NMEA_CHECKSUM(body)
             ser.write(f"${body}*{checksum}\r\n".encode("ascii"))
@@ -108,27 +148,36 @@ def cmd_link(args: argparse.Namespace) -> ConsoleResult:
                 ok=False,
                 command="link",
                 message="Connected to serial port, but no modem response within timeout.",
-                data={"port": args.port, "baud": args.baud, "timeout": args.timeout},
+                data={"port": port, "baud": baud, "timeout": args.timeout},
             )
 
         return ConsoleResult(
             ok=True,
             command="link",
             message="Serial link established and modem responded.",
-            data={"port": args.port, "baud": args.baud, "response": line},
+            data={"port": port, "baud": baud, "response": line},
         )
     except Exception as exc:
         return ConsoleResult(
             ok=False,
             command="link",
             message=f"Failed to open link: {exc}",
-            data={"port": args.port, "baud": args.baud},
+            data={"port": port, "baud": baud},
         )
 
 
 def cmd_device_info(args: argparse.Namespace) -> ConsoleResult:
+    profile = _load_profile(args.profile)
+    port, baud = _resolve_port_and_baud(args, profile)
+    if not port:
+        return ConsoleResult(
+            ok=False,
+            command="device-info",
+            message="No serial port specified. Use --port or set a profile default.",
+        )
+
     try:
-        with _open_serial(args.port, args.baud) as ser:
+        with _open_serial(port, baud) as ser:
             body = "PUWV?,0"
             checksum = CALCULATE_NMEA_CHECKSUM(body)
             full_cmd = f"${body}*{checksum}\r\n"
@@ -158,9 +207,21 @@ def cmd_device_info(args: argparse.Namespace) -> ConsoleResult:
 
 
 def cmd_ping(args: argparse.Namespace) -> ConsoleResult:
+    profile = _load_profile(args.profile)
+    port, baud = _resolve_port_and_baud(args, profile)
+    if not port:
+        return ConsoleResult(
+            ok=False,
+            command="ping",
+            message="No serial port specified. Use --port or set a profile default.",
+        )
+
+    tx = args.tx if args.tx is not None else int(profile.get("default_tx", 0))
+    rx = args.rx if args.rx is not None else int(profile.get("default_rx", 0))
+
     try:
-        with _open_serial(args.port, args.baud) as ser:
-            SEND_RC_PING(ser, tx_ch=args.tx, rx_ch=args.rx)
+        with _open_serial(port, baud) as ser:
+            SEND_RC_PING(ser, tx_ch=tx, rx_ch=rx)
             time.sleep(0.5)
             tp_sec, distance_m = READ_RESPONSE(
                 ser,
@@ -174,8 +235,8 @@ def cmd_ping(args: argparse.Namespace) -> ConsoleResult:
                 command="ping",
                 message="No RC ping response received within timeout.",
                 data={
-                    "tx": args.tx,
-                    "rx": args.rx,
+                    "tx": tx,
+                    "rx": rx,
                     "timeout": args.timeout,
                     "sound_speed": args.sound_speed,
                 },
@@ -186,8 +247,8 @@ def cmd_ping(args: argparse.Namespace) -> ConsoleResult:
             command="ping",
             message="RC ping response received.",
             data={
-                "tx": args.tx,
-                "rx": args.rx,
+                "tx": tx,
+                "rx": rx,
                 "propagation_time_sec": tp_sec,
                 "slant_range_m": distance_m,
                 "sound_speed": args.sound_speed,
@@ -198,8 +259,61 @@ def cmd_ping(args: argparse.Namespace) -> ConsoleResult:
             ok=False,
             command="ping",
             message=f"Ping request failed: {exc}",
-            data={"tx": args.tx, "rx": args.rx},
+            data={"tx": tx, "rx": rx},
         )
+
+
+def cmd_list_ports(args: argparse.Namespace) -> ConsoleResult:
+    ports = []
+    try:
+        for p in list_ports.comports():
+            ports.append(
+                {
+                    "device": p.device,
+                    "description": p.description,
+                    "hwid": p.hwid,
+                }
+            )
+        if ports:
+            return ConsoleResult(
+                ok=True,
+                command="list-ports",
+                message=f"Found {len(ports)} serial port(s).",
+                data={"ports": ports},
+            )
+        return ConsoleResult(
+            ok=True,
+            command="list-ports",
+            message="No serial ports found.",
+            data={"ports": []},
+        )
+    except Exception as exc:
+        return ConsoleResult(
+            ok=False,
+            command="list-ports",
+            message=f"Failed to enumerate serial ports: {exc}",
+        )
+
+
+def cmd_profile_set(args: argparse.Namespace) -> ConsoleResult:
+    profile = _load_profile(args.profile)
+
+    if args.default_port is not None:
+        profile["default_port"] = args.default_port
+    if args.default_baud is not None:
+        profile["default_baud"] = args.default_baud
+    if args.default_tx is not None:
+        profile["default_tx"] = args.default_tx
+    if args.default_rx is not None:
+        profile["default_rx"] = args.default_rx
+
+    saved_path = _save_profile(args.profile, profile)
+    return ConsoleResult(
+        ok=True,
+        command="profile-set",
+        message="Profile saved.",
+        data={"profile_path": saved_path, "profile": profile},
+    )
 
 
 def cmd_monitor(args: argparse.Namespace) -> ConsoleResult:
@@ -221,10 +335,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     output_parent = argparse.ArgumentParser(add_help=False)
     output_parent.add_argument("--json", action="store_true", help="Output JSON")
+    output_parent.add_argument(
+        "--profile",
+        help="Profile path (default: ~/.sealink_console_profile.json)",
+    )
 
     connection_parent = argparse.ArgumentParser(add_help=False, parents=[output_parent])
-    connection_parent.add_argument("--port", required=True, help="Serial port, for example COM3")
-    connection_parent.add_argument("--baud", type=int, default=9600, help="UART baud rate")
+    connection_parent.add_argument("--port", help="Serial port, for example COM3")
+    connection_parent.add_argument("--baud", type=int, help="UART baud rate")
     connection_parent.add_argument("--timeout", type=float, default=10.0, help="Response timeout in seconds")
 
     sub = parser.add_subparsers(dest="command", required=True)
@@ -236,8 +354,8 @@ def build_parser() -> argparse.ArgumentParser:
     p_info.set_defaults(handler=cmd_device_info)
 
     p_ping = sub.add_parser("ping", parents=[connection_parent], help="Run remote ping command")
-    p_ping.add_argument("--tx", type=int, default=0, help="Transmit channel")
-    p_ping.add_argument("--rx", type=int, default=0, help="Receive channel")
+    p_ping.add_argument("--tx", type=int, help="Transmit channel")
+    p_ping.add_argument("--rx", type=int, help="Receive channel")
     p_ping.add_argument(
         "--sound-speed",
         type=float,
@@ -245,6 +363,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Sound speed in m/s for range estimation",
     )
     p_ping.set_defaults(handler=cmd_ping)
+
+    p_ports = sub.add_parser("list-ports", parents=[output_parent], help="List available serial ports")
+    p_ports.set_defaults(handler=cmd_list_ports)
+
+    p_profile = sub.add_parser("profile-set", parents=[output_parent], help="Set and save default profile values")
+    p_profile.add_argument("--default-port", help="Default serial port, for example COM3")
+    p_profile.add_argument("--default-baud", type=int, help="Default baud rate")
+    p_profile.add_argument("--default-tx", type=int, help="Default transmit channel")
+    p_profile.add_argument("--default-rx", type=int, help="Default receive channel")
+    p_profile.set_defaults(handler=cmd_profile_set)
 
     p_mon = sub.add_parser("monitor", parents=[output_parent], help="Start monitor mode")
     p_mon.add_argument("--interval", type=float, default=1.0, help="Poll interval seconds")
