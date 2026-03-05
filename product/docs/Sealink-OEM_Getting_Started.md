@@ -26,22 +26,28 @@ Tip: On Windows, find your COM port in Device Manager → Ports (COM & LPT).
 
 For hardware projects, Arduino or Raspberry Pi can also connect directly to XP5 pins for manual control.
 
-## 3. Automated Control / Custom Features
-   
-For scripting, logging, or integration, any language that can open a serial port at 9600 8N1 works.
+## 3. Automation and Integration
 
-We recommend Python:  
+For scripting, logging, or system integration, any language that can open a serial port at `9600 8N1` can control Sealink-OEM.
 
-- Install Python 3.10+ (free from python.org) with `pyserial` package 
-- Use our sample Python script for initial testing and familiarization.
-- The script accepts command-line options (for example `--port`, `--tx`, `--rx`, `--test`) and prompts for any missing values.
-- For interactive operation, use the Sealink-OEM Utility app and enter port/channels/environment values in the app fields.
+Recommended first path (Python):
+
+- Install Python `3.10+` from python.org.
+- Install `pyserial`.
+- Run the sample Python script first to verify communication.
+- Common command options are `--port`, `--tx`, `--rx`, and `--test`.
+- If an option is omitted, the script prompts for the missing value.
+
+If you prefer interactive (GUI) operation:
+
+- Use the Sealink-OEM Utility app and enter port/channel/environment values in the app fields.
 - See [Sealink-OEM Utility App Guide](Sealink-OEM_Utility_App_Guide.md) for app workflows.
-- For step-by-step virtual environment setup commands, see [Integrator Platform Guide](../integrations/PLATFORM_INTEGRATOR_GUIDE.md).
 
-Other options:  
-- C# (Windows apps)  
-- Arduino or Raspberry Pi (for embedded projects — use serial libraries like Serial or pyserial)
+For virtual environment setup and CLI examples, see [Integrator Platform Guide](../integrations/PLATFORM_INTEGRATOR_GUIDE.md).
+
+Other implementation options:
+- C# (Windows applications)
+- Arduino or Raspberry Pi (embedded projects using serial libraries)
 
 ## 4. References
 - [Sealink-OEM technical drawing](Sealink-OEM_Technical_Drawing.pdf)
@@ -50,9 +56,10 @@ Other options:
 
 ## 5. Next steps
 
-- For app-focused operation (Windows package + local launch scripts), continue with [Sealink-OEM Utility App Guide](Sealink-OEM_Utility_App_Guide.md).
+- For app-focused Windows operation, continue with [Sealink-OEM Utility App Guide](Sealink-OEM_Utility_App_Guide.md).
 - For command details, use [Communication protocol](Sealink-OEM_Communication_Protocol.md).
 - For range testing specifics, use [Basic Ranging Guide](Sealink-OEM_Basic_Ranging_Guide.md).
 
-___
-Questions? Write to support@divenetgps.com.
+---
+Questions or support? Contact DiveNET: support@divenetgps.com
+Last updated: March 2026

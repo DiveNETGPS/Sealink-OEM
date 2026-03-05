@@ -568,5 +568,6 @@ No host action required — incoming packet is delivered automatically.
 
 (Checksums must be calculated correctly before sending.)
 
-___
-Questions or support? Contact support@divenetgps.com
+---
+Questions or support? Contact DiveNET: support@divenetgps.com
+Last updated: March 2026

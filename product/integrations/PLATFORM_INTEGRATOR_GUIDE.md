@@ -1,21 +1,18 @@
 # Sealink OEM Integrator Platform Guide
 
-## Recommended release model (2 versions)
+## Which package should you use?
 
-One-command build for both distributables:
-- `make_all_releases.bat`
+Choose the package that matches your workflow.
 
-### Version A: Operator Package (Windows, non-technical users)
-Send `release/Sealink-OEM`.
+### Package A: `Sealink-OEM` (Windows Utility package)
+Use this package for normal Windows operation with the desktop utility.
 
 This is the turnkey Windows Utility package with `.exe` binaries and `.bat` launchers for normal day-to-day use.
 
 See `docs/Sealink-OEM_Utility_App_Guide.md` for app-specific usage details.
 
-### Version B: Integrator Package (technical users)
-Send `release/Sealink-Integrator-Pack` (or its zip) created by:
-- `build_integrator_pack.bat`
-- `make_integrator_zip.bat`
+### Package B: `Sealink-Integrator-Pack` (Technical integration package)
+Use this package if you are integrating on Raspberry Pi/Linux or Arduino.
 
 This package covers Linux/Raspberry Pi and Arduino workflows in a single technical bundle.
 
@@ -57,7 +54,7 @@ Files:
 - `resources/requirements.txt`
 - `integrations/raspberry-pi/run_sealink_cli.sh`
 
-Quick start on Pi:
+Quick start on Raspberry Pi:
 ```bash
 cd integrations/raspberry-pi
 chmod +x run_sealink_cli.sh
@@ -82,8 +79,11 @@ Hardware requirements:
 - 3.3V UART logic compatible with Sealink-OEM.
 - Board with a hardware UART connected to modem (example sketch uses `Serial1`).
 
-## macOS policy
-macOS is not packaged by default.
+## macOS support
+There is no separate macOS desktop package.
 
-For partner requests, provide source-based CLI instructions (same pattern as Linux).
-Do not maintain a separate turnkey macOS package.
+For macOS, use the CLI workflow with the same steps shown for Linux.
+
+---
+Questions or support? Contact DiveNET: support@divenetgps.com
+Last updated: March 2026

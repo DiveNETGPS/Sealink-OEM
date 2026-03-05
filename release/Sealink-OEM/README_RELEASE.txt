@@ -11,7 +11,7 @@ This folder includes:
 Quick start:
 1) Connect your hardware and identify the COM port.
 2) Double-click run_utility.bat for normal operation.
-3) For local testing/demo mode, double-click run_all.bat.
+3) If you need the built-in test listener (bench testing or demo), double-click run_all.bat.
 
 Virtual COM simulation:
 - For bench testing without hardware, use a virtual COM port pair and run_all.bat.
@@ -20,4 +20,4 @@ Virtual COM simulation:
 Troubleshooting:
 - If Windows SmartScreen warns, click "More info" then "Run anyway" (if trusted source).
 - Ensure the serial device appears in Device Manager.
-- Listener is only for test workflows; production users typically run utility only.
+- Listener is only for test workflows without actual hardware connected; typical users run utility only connected to hardware.

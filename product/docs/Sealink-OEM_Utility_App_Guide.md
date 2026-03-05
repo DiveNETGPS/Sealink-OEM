@@ -1,19 +1,19 @@
 # DiveNET: Sealink-OEM Utility App Guide
 
-This guide covers packaged Windows usage and local repository launch workflows for the Sealink-OEM Utility app.
+This guide explains how to use the Sealink-OEM Utility app and when to use the integrator workflow.
 
 ## Minimum Host Requirements
 
-### A) Windows Utility Package (`release/Sealink-OEM`)
+### A) Sealink-OEM (Windows Utility Package)
 
 - OS: Windows 10 or Windows 11 (64-bit)
 - No Python installation required for `.exe` usage
 - At least one available serial port (`COMx`) via USB-UART adapter or direct UART bridge
 - Local file write access in the package folder (for launch scripts and logs)
 
-### B) Integrator Package (`release/Sealink-Integrator-Pack`)
+### B) Sealink-Integrator-Pack (Integrator CLI Package)
 
-- Python 3.10+ (3.10–3.12 validated)
+- Python 3.10+ (3.10-3.14 validated)
 - `pip` available for dependency install
 - Packages from `resources/requirements.txt` (includes `pyserial`)
 - Platform workflows:
@@ -30,11 +30,9 @@ The Utility app is intended for:
 - Basic command execution and response verification
 - Essential functionality/performance checks
 
-## 2. Packaged Windows Workflow
+## 2. Windows Utility Workflow
 
-Operator package location:
-
-- `release/Sealink-OEM`
+In the Sealink-OEM package folder:
 
 Main Files:
 
@@ -51,16 +49,16 @@ Typical Use:
 3. Enter serial port, channels, and environmental parameters in the app.
 4. Select command (`ping`, `device-info`, or `remote-depth`) and run.
 
-## 3. Local Repository Workflow (Python)
+## 3. Source Repository Workflow (Python, optional)
 
-From repository root:
+If you are working from the source repository (not a packaged download):
 
 - Start utility: `launch_utility.bat`
 - Start listener only: `launch_listener.bat`
 - Start both windows: `start_all.bat`
 - Quiet start: `start_all_quiet.bat`
 
-Underlying Script:
+Underlying script:
 
 - `product/resources/sealink_utility.py`
 
@@ -78,7 +76,7 @@ Required/Typical Fields:
 
 The app computes sound speed from environmental values and reports propagation time and slant range from responses.
 
-## 5. Relationship to CLI/Test Script
+## 5. Relationship to CLI Test Script
 
 The Utility app wraps the same command logic used by:
 
@@ -93,3 +91,7 @@ Use the script directly when CLI automation is preferred.
 - Unstable results: collect multiple pings and average under stable conditions.
 
 For protocol-level details, see [Sealink-OEM Communication Protocol](Sealink-OEM_Communication_Protocol.md).
+
+---
+Questions or support? Contact DiveNET: support@divenetgps.com
+Last updated: March 2026

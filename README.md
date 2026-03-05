@@ -15,4 +15,6 @@ Repository landing page and navigation.
 - Root-level build/release scripts (`*.bat`, `*.spec`, `VERSION.txt`) are packaging utilities.
 - `release/` and `release_assets/` hold generated/customer-facing distribution assets.
 
-Questions: support@divenetgps.com
+---
+Questions or support? Contact DiveNET: support@divenetgps.com
+Last updated: March 2026

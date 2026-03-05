@@ -91,6 +91,7 @@ ___
 Continue to:
 - [Getting Started](Sealink-OEM_Getting_Started.md)
 - [Communication Protocol](Sealink-OEM_Communication_Protocol.md)
-___
-© 2026 DiveNET Subsea Wireless – Beringia Enterprises LLC  
-All rights reserved.
+
+---
+Questions or support? Contact DiveNET: support@divenetgps.com
+Last updated: March 2026

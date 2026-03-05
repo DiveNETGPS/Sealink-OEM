@@ -7,13 +7,13 @@ This document summarizes the **mandatory requirements** for operating the Sealin
 ### Host Software Requirements (Native App and Integrator Workflows)
 
 #### Windows Native Utility Package
-- Target package: `release/Sealink-OEM`
+- Package: Sealink-OEM (Windows Utility package)
 - OS: Windows 10 or Windows 11 (64-bit)
 - Python: not required for packaged `.exe` execution
 - Serial access: at least one available `COM` port through compatible USB-UART bridge or host UART interface
 
 #### Integrator / CLI Workflow
-- Target package: `release/Sealink-Integrator-Pack`
+- Package: Sealink-Integrator-Pack (CLI/Integration)
 - Python: 3.10 or newer (3.10–3.12 recommended)
 - Required Python dependency set from `resources/requirements.txt` (includes `pyserial`)
 - Linux/Raspberry Pi workflow requires shell access for `integrations/raspberry-pi/run_sealink_cli.sh`
@@ -89,8 +89,5 @@ Choose based on range vs. depth trade-off:
 - Configurable via $PUWV1 sentences (address, channel, baud rate, etc.)
 
 ---
-
-**Questions or integration support?**  
-Contact DiveNET: support@divenetgps.com
-
+Questions or support? Contact DiveNET: support@divenetgps.com
 Last updated: March 2026

@@ -146,10 +146,23 @@ Sound speed varies with temperature, salinity, and depth. Use these approximate 
 - Error in ACK (`$PUWV0`) → Check `errCode` (e.g., 3 = transmitter busy, 4 = out of range); resolve before retrying.
 
 For advanced protocol commands (set/query channel/address, etc.), see [Sealink-OEM Communication Protocol](./Sealink-OEM_Communication_Protocol.md).
-___
-Questions or need help with custom ranging setups? Contact support@divenetgps.com.
 
+---
+Questions or support? Contact DiveNET: support@divenetgps.com
 Last updated: March 2026
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

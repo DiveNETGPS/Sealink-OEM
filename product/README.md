@@ -73,9 +73,8 @@ Full documentation → see [docs](docs) folder.
 ### Utility App Documentation
 
 - [Sealink-OEM Utility App Guide](docs/Sealink-OEM_Utility_App_Guide.md)
-- [CLI/Test Script](resources/uart-getRange.py)
+- [CLI test script](resources/uart-getRange.py)
 
 ---
-Questions? Contact DiveNET support: support@divenetgps.com
-
-© 2026 DiveNET Subsea Wireless — All rights reserved.
+Questions or support? Contact DiveNET: support@divenetgps.com
+Last updated: March 2026

@@ -50,7 +50,7 @@ copy /y "dist\SealinkListener.exe" "release\Sealink-OEM\SealinkListener.exe" >nu
 copy /y "release_assets\run_utility.bat" "release\Sealink-OEM\run_utility.bat" >nul
 copy /y "release_assets\run_listener.bat" "release\Sealink-OEM\run_listener.bat" >nul
 copy /y "release_assets\run_all.bat" "release\Sealink-OEM\run_all.bat" >nul
-copy /y "release_assets\README_CUSTOMER.txt" "release\Sealink-OEM\README_CUSTOMER.txt" >nul
+copy /y "release_assets\README_RELEASE.txt" "release\Sealink-OEM\README_RELEASE.txt" >nul
 
 echo.
 echo Build complete.
