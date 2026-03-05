@@ -20,4 +20,4 @@ Virtual COM simulation:
 Troubleshooting:
 - If Windows SmartScreen warns, click "More info" then "Run anyway" (if trusted source).
 - Ensure the serial device appears in Device Manager.
-- Listener is only for test workflows without actual hardware connected; typical users run utility only connected to hardware.
+- Listener is only for test workflows; production users typically run utility only.
